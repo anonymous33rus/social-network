@@ -27,6 +27,11 @@
                                             Пользователь ничего не написал о себе.
                                         @endempty
                                     </p>
+
+                                @auth
+                                    <livewire:friend :user="$user">
+                                @endauth
+
                                 </div>
                             </div>
                             <div class="sm:w-2/3 sm:pl-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 sm:mt-0 text-center sm:text-left">

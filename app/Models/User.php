@@ -103,4 +103,28 @@ class User extends Authenticatable
     {
         return Carbon::parse($this->birthday)->age ? : '';
     }
+
+    # Связь многие ко многим
+    public function friends()
+    {
+        return $this->belongsToMany(self::class, 'friends', 'user_id', 'friend_id');
+    }
+
+    # Добавить в друзья
+    public function addFriend($id)
+    {
+        $this->friends()->attach($id);
+    }
+
+    # Запрос в друзья на рассмотрении
+    public function friendRequestPending()
+    {
+        return $this->friends()->wherePivot('accepted', false)->get();
+    }
+
+    # Есть запрос на добавление в друзья
+    public function hasFriendRequestPending(User $user)
+    {
+        return (bool) $this->friendRequestPending()->where('id', $user->id)->count();
+    }
 }
